@@ -23,7 +23,7 @@ jobs:
           name: Building mysql 5
           command: docker-compose build mysql5
       - run:
-          name: Building mysql:8.0
+          name: Building mysql:8
           command: docker-compose build mysql8
       - run:
           name: Saving images
@@ -35,7 +35,7 @@ jobs:
           root: ~/
           paths:
             - images
-  deploy:
+  publish:
     docker:
       - image: cimg/base:stable
     steps:
@@ -73,10 +73,10 @@ workflows:
       - build:
           requires:
             - checkout
-      - deploy:
+      - publish:
           requires:
             - build
           filters:
             branches:
               only:
-                - master
+                - main
