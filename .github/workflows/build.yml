@@ -23,6 +23,10 @@ jobs:
     needs: checkout
     runs-on: ubuntu-latest
     steps:
+    - name: Attach workspace
+      uses: actions/download-artifact@v3
+      with:
+        name: workspace
     - name: Build mysql5
       uses: docker/build-push-action@v3
       with:
