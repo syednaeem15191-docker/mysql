@@ -39,13 +39,13 @@ jobs:
 #         tags: syednaeem15191/mysql:latest,syednaeem15191/mysql:8
     - name: Save image
       run: |
-        mkdir ~/images
-        docker save -o ~/images/mysql5 syednaeem15191/mysql:5
+        mkdir ./images
+        docker save -o ./images/mysql5 syednaeem15191/mysql:5
     - name: Persist images
       uses: actions/upload-artifact@v3
       with:
         name: images
-        path: ~/images
+        path: ./images
   deploy:
     needs: [mysql5]
     runs-on: ubuntu-latest
@@ -54,9 +54,11 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: images
-    - name: Load images
-      run: |
-        docker load -i ~/images/mysql5
+    - name: ls -la
+      run: ls -la
+#     - name: Load images
+#       run: |
+#         docker load -i ~/images/mysql5
     - name: docker image ls
       run: docker image ls
 #     - name: Login to Docker Hub
