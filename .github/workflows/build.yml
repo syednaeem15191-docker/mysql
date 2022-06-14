@@ -55,13 +55,9 @@ jobs:
       with:
         name: images
         path: ~/images
-    - name: ls -la
+    - name: Load images
       run: |
-        cd ~/images
-        ls -la
-#     - name: Load images
-#       run: |
-#         docker load -i ~/images/mysql5
+        docker load -i ~/images/mysql5
     - name: docker image ls
       run: docker image ls
 #     - name: Login to Docker Hub
