@@ -1,0 +1,82 @@
+version: 2.1
+
+jobs:
+  checkout:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+  build:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker:
+          version: 20.10.7
+          docker_layer_caching: true
+      - run:
+          name: Building mysql 5
+          command: docker-compose build mysql5
+      - run:
+          name: Building mysql:8.0
+          command: docker-compose build mysql8
+      - run:
+          name: Saving images
+          command: |
+            mkdir ~/images
+            docker save -o ~/images/mysql5 project_mysql5
+            docker save -o ~/images/mysql8 project_mysql8
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - images
+  deploy:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker:
+          version: 20.10.7
+          docker_layer_caching: true
+      - run:
+          name: Loading images
+          command: |
+            docker load -i ~/images/mysql5
+            docker load -i ~/images/mysql8
+      - run:
+          name: Logging into dockerhub
+          command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+      - run:
+          name: Publishing mysql:5
+          command: |
+            docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
+            docker push ${DOCKER_USERNAME}/mysql:5
+      - run:
+          name: Publishing mysql:8
+          command: |
+            docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:8
+            docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
+            docker push ${DOCKER_USERNAME}/mysql:8
+            docker push ${DOCKER_USERNAME}/mysql:latest
+
+workflows:
+  version: 2.1
+  build-and-deploy:
+    jobs:
+      - checkout
+      - build:
+          requires:
+            - checkout
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
