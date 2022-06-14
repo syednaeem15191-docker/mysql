@@ -31,12 +31,6 @@ jobs:
         context: ./mysql5
         push: false
         tags: syednaeem15191/mysql:5
-#     - name: Build mysql8
-#       uses: docker/build-push-action@v3
-#       with:
-#         context: ./mysql8
-#         push: false
-#         tags: syednaeem15191/mysql:latest,syednaeem15191/mysql:8
     - name: Save image
       run: |
         mkdir ~/images
@@ -46,8 +40,31 @@ jobs:
       with:
         name: images
         path: ~/images
+  mysql8:
+    needs: checkout
+    runs-on: ubuntu-latest
+    steps:
+    - name: Attach workspace
+      uses: actions/download-artifact@v3
+      with:
+        name: workspace
+    - name: Build mysql8
+      uses: docker/build-push-action@v3
+      with:
+        context: ./mysql5
+        push: false
+        tags: syednaeem15191/mysql:latest,syednaeem15191/mysql:8
+    - name: Save image
+      run: |
+        mkdir ~/images
+        docker save -o ~/images/mysql8 syednaeem15191/mysql:8
+    - name: Persist images
+      uses: actions/upload-artifact@v3
+      with:
+        name: images
+        path: ~/images
   deploy:
-    needs: [mysql5]
+    needs: [mysql5,mysql8]
     runs-on: ubuntu-latest
     steps:
     - name: Attach images
@@ -58,6 +75,7 @@ jobs:
     - name: Load images
       run: |
         docker load -i ~/images/mysql5
+        docker load -i ~/images/mysql8
     - name: docker image ls
       run: docker image ls
 #     - name: Login to Docker Hub
