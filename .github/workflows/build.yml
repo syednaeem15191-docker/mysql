@@ -16,13 +16,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Building images
-      run: docker-compose build
-
-    - name: Tag images
+    - name: Building mysql5
       run: |
-        docker tag mysql_mysql8 syednaeem15191/mysql:8
-        docker tag mysql_mysql5 syednaeem15191/mysql:5
+        docker-compose build mysql5
+
+    - name: Building mysql8
+      run: |
+        docker-compose build mysql8
+
+#    - name: Tag images
+#      run: |
+#        docker tag mysql_mysql8 syednaeem15191/mysql:8
+#        docker tag mysql_mysql8 syednaeem15191/mysql:latest
+#        docker tag mysql_mysql5 syednaeem15191/mysql:5
 
     - name: docker image ls
       run: docker image ls
