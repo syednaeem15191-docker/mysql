@@ -54,6 +54,7 @@ jobs:
       uses: actions/download-artifact@v3
       with:
         name: images
+        path: ~/images
     - name: ls -la
       run: |
         cd ~/images
