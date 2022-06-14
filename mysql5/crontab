@@ -1,0 +1,14 @@
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name command-to-be-executed
+
+0 0 * * * root . /root/env.sh; mysqldump -uroot -p$MYSQL_ROOT_PASSWORD --databases $MYSQL_DATABASE >> /var/backups/$MYSQL_DATABASE-$(date +'\%Y_\%m_\%d_\%H_\%M_\%S').sql
+0 0 * * * root . /root/env.sh; /usr/bin/find /var/backups -name "*.sql" -type f -mtime +30 -exec rm -f {} +;
