@@ -72,6 +72,9 @@ jobs:
       with:
         name: images
         path: ~/images
+    - run: |
+        cd ~/images
+        ls -la
     - name: Load images
       run: |
         docker load -i ~/images/mysql5
