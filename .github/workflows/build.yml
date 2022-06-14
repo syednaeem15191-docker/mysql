@@ -22,14 +22,14 @@ jobs:
 #         username: ${{ secrets.DOCKERHUB_USERNAME }}
 #         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
-    - name: Build and push
+    - name: Build mysql8
       uses: docker/build-push-action@v3
       with:
         context: ./mysql8
         push: false
         tags: syednaeem15191/mysql:latest,syednaeem15191/mysql:8
 
-    - name: Build and push
+    - name: Build mysql5
       uses: docker/build-push-action@v3
       with:
         context: ./mysql5
