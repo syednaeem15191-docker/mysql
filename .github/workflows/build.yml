@@ -36,7 +36,7 @@ jobs:
     - name: Save image
       run: |
         mkdir ~/images
-        docker save -o ~/images/mysql5 ${DOCKER_USERNAME}/mysql:5
+        docker save -o ~/images/mysql5 ${{ secrets.DOCKERHUB_USERNAME }}/mysql:5
     - name: Persist images
       uses: actions/upload-artifact@v3
       with:
@@ -60,7 +60,7 @@ jobs:
     - name: Save image
       run: |
         mkdir ~/images
-        docker save -o ~/images/mysql8 ${DOCKER_USERNAME}/mysql:8
+        docker save -o ~/images/mysql8 ${{ secrets.DOCKERHUB_USERNAME }}/mysql:8
     - name: Persist images
       uses: actions/upload-artifact@v3
       with:
