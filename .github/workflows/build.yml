@@ -12,15 +12,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Persist workspace
+      uses: actions/upload-artifact@v3
+      with:
+        name: workspace
+        path: ./
     - name: ls -la
       run: ls -la
-    - name: pwd
-      run: pwd
-#     - name: Upload math result for job 1
-#       uses: actions/upload-artifact@v3
-#       with:
-#         name: homework
-#         path: math-homework.txt
   build:
     needs: checkout
     runs-on: ubuntu-latest
