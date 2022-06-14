@@ -18,6 +18,12 @@ jobs:
 
     - name: Building images
       run: docker-compose build
+
+    - name: Tag images
+      run: |
+        docker tag mysql_mysql8 syednaeem15191/mysql:8
+        docker tag mysql_mysql5 syednaeem15191/mysql:5
+
     - name: docker image ls
       run: docker image ls
 
