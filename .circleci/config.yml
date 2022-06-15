@@ -62,14 +62,14 @@ jobs:
           command: docker load -i ~/mysql5
       - run:
           command: docker image ls
-       - run:
-           name: Logging into dockerhub
-           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-       - run:
-           name: Publishing mysql:5
-           command: |
-             docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
-#             docker push ${DOCKER_USERNAME}/mysql:5
+      - run:
+          name: Logging into dockerhub
+          command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+      - run:
+          name: Publishing mysql:5
+          command: |
+            docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
+  #             docker push ${DOCKER_USERNAME}/mysql:5
   publish_mysql8:
     docker:
       - image: cimg/base:stable
@@ -84,14 +84,14 @@ jobs:
           command: docker load -i ~/mysql8
       - run:
           command: docker image ls
-       - run:
-           name: Logging into dockerhub
-           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
-       - run:
-           name: Publishing mysql:8
-           command: |
-             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:8
-             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
+      - run:
+          name: Logging into dockerhub
+          command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+      - run:
+          name: Publishing mysql:8
+          command: |
+            docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:8
+            docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
 #             docker push ${DOCKER_USERNAME}/mysql:8
 #             docker push ${DOCKER_USERNAME}/mysql:latest
 
