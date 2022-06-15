@@ -74,7 +74,7 @@ jobs:
            name: Publishing mysql:5
            command: |
              docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
-             docker push ${DOCKER_USERNAME}/mysql:5
+#             docker push ${DOCKER_USERNAME}/mysql:5
   publish_mysql8:
     docker:
       - image: cimg/base:stable
@@ -112,9 +112,15 @@ workflows:
       - build_mysql8:
           requires:
             - checkout
-      - publish:
+      - publish_mysql5:
           requires:
             - build_mysql5
+          filters:
+            branches:
+              only:
+                - main
+      - publish_mysql8:
+          requires:
             - build_mysql8
           filters:
             branches:
