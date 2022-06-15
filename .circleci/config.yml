@@ -61,8 +61,6 @@ jobs:
           name: Loading image
           command: docker load -i ~/mysql5
       - run:
-          command: docker image ls
-      - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
@@ -82,8 +80,6 @@ jobs:
       - run:
           name: Loading image
           command: docker load -i ~/mysql8
-      - run:
-          command: docker image ls
       - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
