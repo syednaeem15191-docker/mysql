@@ -11,6 +11,7 @@ jobs:
           paths:
             - project
   build_mysql5:
+    name: 'Build mysql:5'
     docker:
       - image: cimg/base:stable
     steps:
