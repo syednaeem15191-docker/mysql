@@ -66,7 +66,7 @@ jobs:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
-          name: Publishing mysql:5
+          name: Publishing image
           command: |
             docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
   #             docker push ${DOCKER_USERNAME}/mysql:5
@@ -88,7 +88,7 @@ jobs:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
-          name: Publishing mysql:8
+          name: Publishing image
           command: |
             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:8
             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
@@ -106,17 +106,17 @@ workflows:
       - build_mysql8:
           requires:
             - checkout
-#      - publish_mysql5:
-#          requires:
-#            - build_mysql5
-#          filters:
-#            branches:
-#              only:
-#                - main
-#      - publish_mysql8:
-#          requires:
-#            - build_mysql8
-#          filters:
-#            branches:
-#              only:
-#                - main
+      - publish_mysql5:
+          requires:
+            - build_mysql5
+          filters:
+            branches:
+              only:
+                - main
+      - publish_mysql8:
+          requires:
+            - build_mysql8
+          filters:
+            branches:
+              only:
+                - main
