@@ -30,7 +30,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - images
+            - ~/mysql5
   build_mysql8:
     docker:
       - image: cimg/base:stable
@@ -51,7 +51,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - images
+            - ~/mysql8
   publish_mysql5:
     docker:
       - image: cimg/base:stable
