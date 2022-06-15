@@ -105,9 +105,9 @@ workflows:
       - build_mysql5:
           requires:
             - checkout
-#      - build_mysql8:
-#          requires:
-#            - checkout
+      - build_mysql8:
+          requires:
+            - checkout
 #      - publish_mysql5:
 #          requires:
 #            - build_mysql5
