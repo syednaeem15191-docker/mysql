@@ -22,36 +22,36 @@ jobs:
       - run:
           name: Building mysql 5
           command: docker-compose build mysql5
-      - run:
-          name: Saving images
-          command: |
-            mkdir ~/mysql5
-            docker save -o ~/mysql5 project_mysql5
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - ~/mysql5
-  build_mysql8:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - attach_workspace:
-          at: ~/
-      - setup_remote_docker:
-          version: 20.10.7
-          docker_layer_caching: true
-      - run:
-          name: Building mysql 8
-          command: docker-compose build mysql8
-      - run:
-          name: Saving images
-          command: |
-            mkdir ~/mysql8
-            docker save -o ~/mysql8 project_mysql8
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - ~/mysql8
+#      - run:
+#          name: Saving images
+#          command: |
+#            mkdir ~/mysql5
+#            docker save -o ~/mysql5 project_mysql5
+#      - persist_to_workspace:
+#          root: ~/
+#          paths:
+#            - ~/mysql5
+#  build_mysql8:
+#    docker:
+#      - image: cimg/base:stable
+#    steps:
+#      - attach_workspace:
+#          at: ~/
+#      - setup_remote_docker:
+#          version: 20.10.7
+#          docker_layer_caching: true
+#      - run:
+#          name: Building mysql 8
+#          command: docker-compose build mysql8
+#      - run:
+#          name: Saving images
+#          command: |
+#            mkdir ~/mysql8
+#            docker save -o ~/mysql8 project_mysql8
+#      - persist_to_workspace:
+#          root: ~/
+#          paths:
+#            - ~/mysql8
 #  publish_mysql5:
 #    docker:
 #      - image: cimg/base:stable
@@ -109,9 +109,9 @@ workflows:
       - build_mysql5:
           requires:
             - checkout
-      - build_mysql8:
-          requires:
-            - checkout
+#      - build_mysql8:
+#          requires:
+#            - checkout
 #      - publish_mysql5:
 #          requires:
 #            - build_mysql5
