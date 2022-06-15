@@ -22,15 +22,15 @@ jobs:
       - run:
           name: Building mysql 5
           command: docker-compose build mysql5
-#      - run:
-#          name: Saving images
-#          command: |
-#            mkdir ~/mysql5
-#            docker save -o ~/mysql5 project_mysql5
-#      - persist_to_workspace:
-#          root: ~/
-#          paths:
-#            - ~/mysql5
+      - run:
+          name: Saving images
+          command: |
+            mkdir ~/mysql5
+            docker save -o ~/mysql5 project_mysql5
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - mysql5
 #  build_mysql8:
 #    docker:
 #      - image: cimg/base:stable
