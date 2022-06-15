@@ -69,7 +69,7 @@ jobs:
           name: Publishing image
           command: |
             docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
-  #             docker push ${DOCKER_USERNAME}/mysql:5
+            docker push ${DOCKER_USERNAME}/mysql:5
   publish_mysql8:
     docker:
       - image: cimg/base:stable
@@ -92,8 +92,8 @@ jobs:
           command: |
             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:8
             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
-#             docker push ${DOCKER_USERNAME}/mysql:8
-#             docker push ${DOCKER_USERNAME}/mysql:latest
+            docker push ${DOCKER_USERNAME}/mysql:8
+            docker push ${DOCKER_USERNAME}/mysql:latest
 
 workflows:
   version: 2
