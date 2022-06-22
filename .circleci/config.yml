@@ -21,7 +21,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Building image
-          command: docker-compose build mysql5 --no-cache
+          command: docker-compose build mysql5
       - run:
           name: Saving image
           command: docker save -o ~/mysql5 project_mysql5
@@ -40,7 +40,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Building image
-          command: docker-compose build mysql8 --no-cache
+          command: docker-compose build mysql8
       - run:
           name: Saving image
           command: docker save -o ~/mysql8 project_mysql8
