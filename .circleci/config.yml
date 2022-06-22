@@ -129,8 +129,8 @@ workflows:
                 - main
       - cleanup:
           requires:
-            - build_mysql5
-            - build_mysql8
+            - publish_mysql5
+            - publish_mysql8
           filters:
             branches:
               only:
