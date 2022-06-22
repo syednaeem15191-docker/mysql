@@ -58,6 +58,9 @@ jobs:
           version: 20.10.7
           docker_layer_caching: true
       - run:
+          name: Loading image
+          command: docker load -i ~/mysql5
+      - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
@@ -78,6 +81,9 @@ jobs:
       - setup_remote_docker:
           version: 20.10.7
           docker_layer_caching: true
+      - run:
+          name: Loading image
+          command: docker load -i ~/mysql8
       - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
