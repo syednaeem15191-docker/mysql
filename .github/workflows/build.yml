@@ -39,7 +39,7 @@ jobs:
         push: true
         tags: syednaeem15191/mysql:5
     - name: Clear docker images
-        run: docker image rm syednaeem15191/mysql
+      run: docker image rm syednaeem15191/mysql
   mysql8:
     name: Building mysql8
     needs: checkout
@@ -61,4 +61,4 @@ jobs:
         push: false
         tags: syednaeem15191/mysql:8, syednaeem15191/mysql:latest
     - name: Clear docker images
-        run: docker image rm syednaeem15191/mysql
+      run: docker image rm syednaeem15191/mysql
