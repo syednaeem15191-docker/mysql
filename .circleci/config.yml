@@ -22,6 +22,9 @@ jobs:
       - run:
           name: Building image
           command: docker-compose build mysql5
+      - run:
+          name: Saving image
+          command: docker save -o ~/mysql5 project_mysql5
       - persist_to_workspace:
           root: ~/
           paths:
@@ -38,6 +41,9 @@ jobs:
       - run:
           name: Building image
           command: docker-compose build mysql8
+      - run:
+          name: Saving image
+          command: docker save -o ~/mysql8 project_mysql8
       - persist_to_workspace:
           root: ~/
           paths:
@@ -107,19 +113,19 @@ workflows:
   build-and-publish:
     jobs:
       - checkout
-#      - build_mysql5:
-#          requires:
-#            - checkout
+      - build_mysql5:
+          requires:
+            - checkout
       - build_mysql8:
           requires:
             - checkout
-#      - publish_mysql5:
-#          requires:
-#            - build_mysql5
-#          filters:
-#            branches:
-#              only:
-#                - main
+      - publish_mysql5:
+          requires:
+            - build_mysql5
+          filters:
+            branches:
+              only:
+                - main
       - publish_mysql8:
           requires:
             - build_mysql8
@@ -129,7 +135,7 @@ workflows:
                 - main
       - cleanup:
           requires:
-#            - publish_mysql5
+            - publish_mysql5
             - publish_mysql8
           filters:
             branches:
