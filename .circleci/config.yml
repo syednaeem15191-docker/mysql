@@ -22,13 +22,10 @@ jobs:
       - run:
           name: Building image
           command: docker-compose build mysql5
-      - run:
-          name: Saving image
-          command: docker save -o ~/mysql5 project_mysql5
       - persist_to_workspace:
           root: ~/
           paths:
-            - mysql5
+            - project
   build_mysql8:
     docker:
       - image: cimg/base:stable
@@ -41,13 +38,10 @@ jobs:
       - run:
           name: Building image
           command: docker-compose build mysql8
-      - run:
-          name: Saving image
-          command: docker save -o ~/mysql8 project_mysql8
       - persist_to_workspace:
           root: ~/
           paths:
-            - mysql8
+            - project
   publish_mysql5:
     docker:
       - image: cimg/base:stable
@@ -58,9 +52,6 @@ jobs:
           version: 20.10.7
           docker_layer_caching: true
       - run:
-          name: Loading image
-          command: docker load -i ~/mysql5
-      - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
@@ -68,6 +59,10 @@ jobs:
           command: |
             docker tag project_mysql5 ${DOCKER_USERNAME}/mysql:5
             docker push ${DOCKER_USERNAME}/mysql:5
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
   publish_mysql8:
     docker:
       - image: cimg/base:stable
@@ -78,9 +73,6 @@ jobs:
           version: 20.10.7
           docker_layer_caching: true
       - run:
-          name: Loading image
-          command: docker load -i ~/mysql8
-      - run:
           name: Logging into dockerhub
           command: docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
       - run:
@@ -90,6 +82,25 @@ jobs:
             docker tag project_mysql8 ${DOCKER_USERNAME}/mysql:latest
             docker push ${DOCKER_USERNAME}/mysql:8
             docker push ${DOCKER_USERNAME}/mysql:latest
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
+  cleanup:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker:
+          version: 20.10.7
+          docker_layer_caching: true
+      - run:
+          name: Docker images
+          command: docker image ls
+      - run:
+          name: Clearing docker images
+          command: docker image prune -a -f
 
 workflows:
   version: 2
@@ -111,6 +122,14 @@ workflows:
                 - main
       - publish_mysql8:
           requires:
+            - build_mysql8
+          filters:
+            branches:
+              only:
+                - main
+      - cleanup:
+          requires:
+            - build_mysql5
             - build_mysql8
           filters:
             branches:
