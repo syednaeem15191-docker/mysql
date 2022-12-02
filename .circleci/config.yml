@@ -4,6 +4,7 @@ jobs:
   checkout:
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - checkout
       - persist_to_workspace:
@@ -13,6 +14,7 @@ jobs:
   build_mysql5:
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - attach_workspace:
           at: ~/
@@ -32,6 +34,7 @@ jobs:
   build_mysql8:
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - attach_workspace:
           at: ~/
@@ -51,6 +54,7 @@ jobs:
   publish_mysql5:
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - attach_workspace:
           at: ~/
@@ -74,6 +78,7 @@ jobs:
   publish_mysql8:
     docker:
       - image: cimg/base:stable
+    resource_class: small
     steps:
       - attach_workspace:
           at: ~/
